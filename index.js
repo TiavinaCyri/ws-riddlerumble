@@ -21,9 +21,9 @@ app.use(express.static(path.join(__dirname, "public")));
 
 io.on("connection", (socket) => {
     console.log("Client connected");
-    socket.on("message1", (data) => {
+    socket.on("send", (data) => {
         console.log("Received from API ::", data);
-        io.emit("message2", data);
+        io.emit("receive", data);
     });
 });
 
