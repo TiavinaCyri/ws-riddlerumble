@@ -6,7 +6,14 @@ const cors = require("cors");
 
 const app = express();
 const httpServer = http.createServer(app);
-const io = socketIO(httpServer);
+const io = socketIO(httpServer, {
+    cors: {
+        origin: '*', // Allow all origins
+        methods: ['GET', 'POST'],
+        allowedHeaders: ['Content-Type'],
+        credentials: true
+    }
+});
 
 app.use(cors());
 
