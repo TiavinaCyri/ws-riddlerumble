@@ -1,34 +1,42 @@
-const express = require("express")
-const http = require("http")
-const socketIO = require("socket.io")
-const path = require("path")
-const cors = require("cors")
+const express = require("express");
+const http = require("http");
+const socketIO = require("socket.io");
+const path = require("path");
+const cors = require("cors");
 
-const app = express()
-const httpServer = http.createServer(app)
+const app = express();
+const httpServer = http.createServer(app);
 
-app.use(cors())
-app.use(express.static(path.join(__dirname, "public")))
+const allowedOrigins = ["https://riddlerumble.vercel.app"];
+
+app.use(cors({
+    origin: allowedOrigins,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type"],
+    credentials: true,
+}));
+
+app.use(express.static(path.join(__dirname, "public")));
 
 const io = socketIO(httpServer, {
     cors: {
-        origin: "https://riddlerumble.vercel.app/",
+        origin: allowedOrigins,
         methods: ["GET", "POST", "PUT", "DELETE"],
         allowedHeaders: ["Content-Type"],
-        creudentials: true,
+        credentials: true,
     },
-})
+});
 
 io.on("connection", (socket) => {
-    console.log("Client connected")
+    console.log("Client connected");
     socket.on("message1", (data) => {
-        console.log("Received from API ::", data)
-        io.emit("message2", data)
-    })
-})
+        console.log("Received from API ::", data);
+        io.emit("message2", data);
+    });
+});
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT || 3001;
 httpServer.listen(PORT, (err) => {
-    if (err) throw err
-    console.log(`Server is running on http://localhost:${PORT}`)
-})
+    if (err) throw err;
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
