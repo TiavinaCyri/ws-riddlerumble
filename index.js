@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, "public")))
 
 const io = socketIO(httpServer, {
     cors: {
-        origin: "*",
+        origin: "https://riddlerumble.vercel.app/",
         methods: ["GET", "POST", "PUT", "DELETE"],
         allowedHeaders: ["Content-Type"],
         creudentials: true,
