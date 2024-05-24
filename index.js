@@ -7,14 +7,13 @@ const cors = require("cors");
 const app = express();
 const httpServer = http.createServer(app);
 
-const allowedOrigins = ["*"];
-
-app.use(cors({
-    origin: allowedOrigins,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type"],
-    credentials: true,
-}));
+const corsOpt = {
+    origin: '*',
+    methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+};
+app.use(cors(corsOpt));
+app.options('*', cors(corsOpt));
 
 app.use(express.static(path.join(__dirname, "public")));
 
