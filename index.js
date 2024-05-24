@@ -25,6 +25,10 @@ io.on("connection", (socket) => {
         console.log("Received from API ::", data);
         io.emit("receive", data);
     });
+    socket.on("room-create", () => {
+        console.log("Room created");
+        io.emit("room-created");
+    });
 });
 
 const PORT = process.env.PORT || 3001;
