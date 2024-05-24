@@ -3,7 +3,6 @@ const http = require("http");
 const socketIO = require("socket.io");
 const path = require("path");
 const cors = require("cors");
-var cron = require('node-cron');
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -22,21 +21,14 @@ app.use(express.static(path.join(__dirname, "public")));
 
 io.on("connection", (socket) => {
     console.log("Client connected");
-    socket.on("send", (data) => {
-        console.log("Received from API ::", data);
-        io.emit("receive", data);
-    });
     socket.on("room-create", () => {
         console.log("Room created");
         io.emit("room-created");
     });
-});
-
-cron.schedule('*/50 * * * * *', () => {
-    io.on("connection", () => {
-        console.log("Client connected force");
-        io.emit("room-created");
-    })
+    socket.on("room-update", () => {
+        console.log("Room Updated");
+        io.emit("room-updated");
+    });
 });
 
 const PORT = process.env.PORT || 3001;
