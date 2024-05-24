@@ -7,7 +7,7 @@ const cors = require("cors");
 const app = express();
 const httpServer = http.createServer(app);
 
-const allowedOrigins = ["https://riddlerumble.vercel.app"];
+const allowedOrigins = ["*"];
 
 app.use(cors({
     origin: allowedOrigins,
