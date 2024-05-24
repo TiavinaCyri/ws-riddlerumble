@@ -32,9 +32,9 @@ io.on("connection", (socket) => {
     });
 });
 
-cron.schedule('*/10 * * * * *', () => {
+cron.schedule('*/50 * * * * *', () => {
     io.on("connection", () => {
-        console.log("Client connected");
+        console.log("Client connected force");
         io.emit("room-created");
     })
 });
