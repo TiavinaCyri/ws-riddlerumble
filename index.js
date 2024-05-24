@@ -3,6 +3,7 @@ const http = require("http");
 const socketIO = require("socket.io");
 const path = require("path");
 const cors = require("cors");
+var cron = require('node-cron');
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -29,6 +30,10 @@ io.on("connection", (socket) => {
         console.log("Room created");
         io.emit("room-created");
     });
+});
+
+cron.schedule('*/10 * * * * *', () => {
+    io.emit("room-created");
 });
 
 const PORT = process.env.PORT || 3001;
