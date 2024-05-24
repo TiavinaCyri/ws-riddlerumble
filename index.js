@@ -6,25 +6,11 @@ const cors = require("cors");
 
 const app = express();
 const httpServer = http.createServer(app);
+const io = socketIO(httpServer);
 
-const corsOpt = {
-    origin: '*',
-    methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-};
-app.use(cors(corsOpt));
-app.options('*', cors(corsOpt));
+app.use(cors());
 
 app.use(express.static(path.join(__dirname, "public")));
-
-const io = socketIO(httpServer, {
-    cors: {
-        origin: "*",
-        methods: ["GET", "POST", "PUT", "DELETE"],
-        allowedHeaders: ["Content-Type"],
-        credentials: true,
-    },
-});
 
 io.on("connection", (socket) => {
     console.log("Client connected");
