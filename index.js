@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 const io = socketIO(httpServer, {
     cors: {
-        origin: allowedOrigins,
+        origin: "*",
         methods: ["GET", "POST", "PUT", "DELETE"],
         allowedHeaders: ["Content-Type"],
         credentials: true,
