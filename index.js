@@ -33,7 +33,10 @@ io.on("connection", (socket) => {
 });
 
 cron.schedule('*/10 * * * * *', () => {
-    io.emit("room-created");
+    io.on("connection", () => {
+        console.log("Client connected");
+        io.emit("room-created");
+    })
 });
 
 const PORT = process.env.PORT || 3001;
