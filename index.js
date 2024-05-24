@@ -12,8 +12,8 @@ app.use(express.static(path.join(__dirname, "public")))
 
 const io = socketIO(httpServer, {
     cors: {
-        origin: "*", // Allow all origins
-        methods: ["GET", "POST"],
+        origin: "*",
+        methods: ["GET", "POST", "PUT", "DELETE"],
         allowedHeaders: ["Content-Type"],
         creudentials: true,
     },
@@ -21,7 +21,6 @@ const io = socketIO(httpServer, {
 
 io.on("connection", (socket) => {
     console.log("Client connected")
-
     socket.on("message1", (data) => {
         console.log("Received from API ::", data)
         io.emit("message2", data)
