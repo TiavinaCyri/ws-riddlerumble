@@ -19,8 +19,6 @@ app.use(cors());
 
 app.use(express.static(path.join(__dirname, "public")));
 
-const roomSubmitCounts = {};
-
 io.on("connection", (socket) => {
   console.log("Client connected");
   socket.on("room-create", () => {
@@ -29,11 +27,8 @@ io.on("connection", (socket) => {
   });
 
   socket.on("player-submit", (roomData) => {
-    console.log(`Player submitted data in room ${roomData.id}:`, roomData);
-    if (roomSubmitCounts[roomData.id] !== undefined) {
-      roomSubmitCounts[roomData.id]++;
-      io.to(JSON.stringify(roomData.id)).emit("submit-count", roomSubmitCounts[roomData.id]);
-    }
+    const data_room = JSON.stringify(roomData);
+    io.emit("submit-count", data_room);
   });
 });
 
