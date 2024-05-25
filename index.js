@@ -7,28 +7,38 @@ const cors = require("cors");
 const app = express();
 const httpServer = http.createServer(app);
 const io = socketIO(httpServer, {
-    cors: {
-        origin: '*', // Allow all origins
-        methods: ['GET', 'POST'],
-        allowedHeaders: ['Content-Type'],
-        credentials: true
-    }
+  cors: {
+    origin: "*", // Allow all origins
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
+    credentials: true,
+  },
 });
 
 app.use(cors());
 
 app.use(express.static(path.join(__dirname, "public")));
 
+const roomSubmitCounts = {};
+
 io.on("connection", (socket) => {
-    console.log("Client connected");
-    socket.on("room-create", () => {
-        console.log("Room created");
-        io.emit("room-created");
-    });
+  console.log("Client connected");
+  socket.on("room-create", () => {
+    console.log("Room created");
+    io.emit("room-created");
+  });
+
+  socket.on("player-submit", ({ roomId, data }) => {
+    console.log(`Player submitted data in room ${roomId}:`, data);
+    if (roomSubmitCounts[roomId] !== undefined) {
+      roomSubmitCounts[roomId]++;
+      io.to(roomId).emit("submit-count", roomSubmitCounts[roomId]);
+    }
+  });
 });
 
 const PORT = process.env.PORT || 3001;
 httpServer.listen(PORT, (err) => {
-    if (err) throw err;
-    console.log(`Server is running on http://localhost:${PORT}`);
+  if (err) throw err;
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
