@@ -25,10 +25,6 @@ io.on("connection", (socket) => {
         console.log("Room created");
         io.emit("room-created");
     });
-    socket.on("room-update", () => {
-        console.log("Room Updated");
-        io.emit("room-updated");
-    });
 });
 
 const PORT = process.env.PORT || 3001;
