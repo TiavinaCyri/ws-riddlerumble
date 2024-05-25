@@ -28,11 +28,11 @@ io.on("connection", (socket) => {
     io.emit("room-created");
   });
 
-  socket.on("submit-count", ({ roomId, data }) => {
-    console.log(`Player submitted data in room ${roomId}:`, data);
-    if (roomSubmitCounts[roomId] !== undefined) {
-      roomSubmitCounts[roomId]++;
-      io.to(roomId).emit("submit-count", roomSubmitCounts[roomId]);
+  socket.on("player-submit", (roomData) => {
+    console.log(`Player submitted data in room ${roomData.id}:`, roomData);
+    if (roomSubmitCounts[roomData.id] !== undefined) {
+      roomSubmitCounts[roomData.id]++;
+      io.to(roomId).emit("submit-count", roomSubmitCounts[roomData.id]);
     }
   });
 });
