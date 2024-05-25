@@ -20,10 +20,10 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, "public")));
 
 io.on("connection", (socket) => {
-    console.log("Client connected");
-    socket.on("room-create", () => {
-        console.log("Room created");
-        io.emit("room-created");
+    console.log("Client connected update");
+    socket.on("room-updated", () => {
+        console.log("Room updated");
+        io.emit("room-updated");
     });
 });
 
