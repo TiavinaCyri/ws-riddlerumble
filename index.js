@@ -28,6 +28,7 @@ io.on("connection", (socket) => {
 
   socket.on("player-submit", (roomData) => {
     const data_room = JSON.stringify(roomData);
+    console.log("Data kely : ", data_room);
     io.emit("submit-count", data_room);
   });
 });
