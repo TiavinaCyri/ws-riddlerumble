@@ -28,7 +28,7 @@ io.on("connection", (socket) => {
     io.emit("room-created");
   });
 
-  socket.on("player-submit", ({ roomId, data }) => {
+  socket.on("submit-count", ({ roomId, data }) => {
     console.log(`Player submitted data in room ${roomId}:`, data);
     if (roomSubmitCounts[roomId] !== undefined) {
       roomSubmitCounts[roomId]++;
