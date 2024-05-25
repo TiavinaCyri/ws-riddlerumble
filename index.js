@@ -32,7 +32,7 @@ io.on("connection", (socket) => {
     console.log(`Player submitted data in room ${roomData.id}:`, roomData);
     if (roomSubmitCounts[roomData.id] !== undefined) {
       roomSubmitCounts[roomData.id]++;
-      io.to(roomId).emit("submit-count", roomSubmitCounts[roomData.id]);
+      io.to(JSON.stringify(roomData.id)).emit("submit-count", roomSubmitCounts[roomData.id]);
     }
   });
 });
