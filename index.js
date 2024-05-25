@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 io.on("connection", (socket) => {
     console.log("Client connected update");
-    socket.on("room-updated", () => {
+    socket.on("room-update", () => {
         console.log("Room updated");
         io.emit("room-updated");
     });
